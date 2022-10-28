@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="shortcut icon" type="image/x-icon" href="{% static "/4skills.png" %}" />
+        <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <script src="/static/bootstrap/js/bootstrap.bundle.js"></script>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Система контроля доступа</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <nav class="navbar navbar-dark bg-dark" style="height: 8vh;">
+            <div class="container-fluid">
+                <a class="navbar-brand" style="font-size: 25px;">Система контроля доступа.</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Меню</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url "home" %}">Главная</a>
+                    </li>
+                    {% if  user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "history" %}">История</a>
+                        <a class="nav-link" href="{% url "manage" %}">Управление</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if  not user.is_authenticated %}
+                        Аккаунт
+                        {% else %}
+                        Здравствуйте, {{user}}
+                        {% endif %}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                        {% if  not user.is_authenticated %}
+                        <li><a class="dropdown-item" href="/login/">Вход</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="/login/logout">Выход</a></li>
+                        {% endif %}
+                        </ul>
+                    </li>
+                    </ul>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </nav>
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>
