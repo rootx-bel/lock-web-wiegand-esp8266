@@ -20,6 +20,7 @@ def api(request):
                 hist.Владелец=data.Владелец
             else:
                 answ = False
+                hist.Владелец='Unknown'
         except:
             answ = False
             hist.Владелец='Unknown'
